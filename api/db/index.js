@@ -30,10 +30,10 @@ const getParticipants = async () => {
 
 const addBill = async bill => {
     await sql.connect(config);
-
-    const { amount } = bill;
+        
+    const { amount, checkedIds } = bill;
     const{recordset} = await sql.query`INSERT INTO Bills (Amount, Date) VALUES(${amount},${new Date()} ) SELECT SCOPE_IDENTITY() as 'id'`;
-
+    checkedIds.foreach(p=> addParticipantsBills(recordset, p))
     await sql.close();
     return recordset[0].id;
 }

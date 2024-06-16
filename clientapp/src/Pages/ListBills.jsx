@@ -13,10 +13,7 @@ const ListBills = ()=>{
 
     const getBills = async()=>{
         const {data} = await axios.get('/api/bills/getall');
-        const response = await axios.get('/api/bills/getall');
-        console.log(data);
-        console.log(response);
-        setBills(data || []);
+        setBills(data);
     }
     return(<>
     <div className="container">
@@ -34,7 +31,7 @@ const ListBills = ()=>{
                 </thead>
                     <tbody>
                         {bills.map(b=>( 
-                        <tr>
+                        <tr key={b.id}>
                             <th scope="row">{b.id}</th>
                             <td>{dayjs(b.date).format('MM/DD/YYYY')}</td>
                             <td>${b.amount}</td>
