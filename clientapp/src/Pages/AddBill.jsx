@@ -32,7 +32,7 @@ const AddBill =()=>{
     }
 
     const onSubmitClick = async()=>{
-        checkedIds = checkedPpl.map(p => p.id);
+        const checkedIds = checkedPpl.map(p => p.id);
         await axios.post('/api/bills/add', {amount, checkedIds})
         navigate('/listbills')
     }

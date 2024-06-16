@@ -28,24 +28,21 @@ const getParticipants = async () => {
     return recordset;
 }
 
-const addBill = async bill => {
-    await sql.connect(config);
-        
-    const { amount, checkedIds } = bill;
-    const{recordset} = await sql.query`INSERT INTO Bills (Amount, Date) VALUES(${amount},${new Date()} ) SELECT SCOPE_IDENTITY() as 'id'`;
-    checkedIds.foreach(p=> addParticipantsBills(recordset, p))
-    await sql.close();
-    return recordset[0].id;
-}
-
-const addParticipantsBills = async participantBill => {
+const addBill = async ({amount, checkedIds}) => {
     await sql.connect(config);
 
-    const { billId, participantId } = participantBill;
-    await sql.query`INSERT INTO ParticipantsBills (ParticipantId, BillId) VALUES(${participantId}, ${billId})`;
+    let query = `insert into Bills
+                values (${amount}, getdate())
+                declare @billid int = scope_identity()`;
+
+    checkedIds.map(i => {
+        query += ` \ninsert into ParticipantsBills
+                   values (@billid, ${i})`
+    });
+
+    await sql.query(query);
 
     await sql.close();
-    
 }
 
 const getBills = async () => {
@@ -72,4 +69,4 @@ const getBill = async id => {
     return recordset;
 }
 
-module.exports = { addParticipant, getParticipants, addBill, addParticipantsBills, getBills, getBill };
+module.exports = { addParticipant, getParticipants, addBill, getBills, getBill };

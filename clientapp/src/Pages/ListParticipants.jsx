@@ -27,7 +27,7 @@ const ListParticipants = ()=>{
                 </thead>
             <tbody>
                 {participants.map(p=>(
-                        <tr><th scope="row" key={p.id}>{p.id}</th><td>{p.name}</td><td>{p.email}</td></tr>
+                        <tr key={p.id}><th scope="row">{p.id}</th><td>{p.name}</td><td>{p.email}</td></tr>
                 ))}
             </tbody>
             </table>
