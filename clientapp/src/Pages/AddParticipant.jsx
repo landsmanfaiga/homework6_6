@@ -6,23 +6,19 @@ const AddParticipant = () => {
 
     const navigate = useNavigate();
 
-    const [participant, setParticipant] = useState({
-        name: '',
-        email: '' 
-    });
+  const[name, setName] = useState('');
+  const[email, setEmail] = useState('');
 
-    const onTextChange = e => {
-        const copy = {...participant};
-        copy[e.target.name] = e.target.value;
-        setParticipant(copy);
+    let participant = {
+        name: name,
+        email: email
     }
 
     const onSubmitClick = async () => {
         await axios.post('/api/participants/add', participant);
-        navigate('/');
+        navigate('/listparticipants');
     }
 
-    const {name, email} = participant;
 
     return (
         <div className="container">
@@ -30,12 +26,22 @@ const AddParticipant = () => {
                 <div className="card shadow p-4">
                     <h2 className="card-title text-center mb-4">Add Participant</h2>
                     <div className="mb-3">
-                        <label for="participantName" className="form-label">Name</label>
-                        <input type="text" className="form-control" placeholder="Enter participant name" value={name} onChange={onTextChange}/>
+                    <label className="form-label">Name</label>
+                                <input type="text"
+                                        className="form-control"
+                                        placeholder="Enter participant name"
+                                        value={name}
+                                        onChange={e=>setName(e.target.value)}
+                                />
                         </div>
                         <div className="mb-3">
-                            <label for="participantEmail" className="form-label">Email (optional)</label>
-                            <input type="email" className="form-control" placeholder="Enter participant email" value={email} onChange={onTextChange}/>
+                        <label className="form-label">Email (optional)</label>
+                                <input type="email"
+                                        className="form-control"
+                                        placeholder="Enter participant email"
+                                        value={email}
+                                        onChange={e=>setEmail(e.target.value)}
+                                />
                             </div>
                             <button className="btn btn-primary w-100" onClick={onSubmitClick}>Add Participant</button>
                         </div>

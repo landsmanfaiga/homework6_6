@@ -33,7 +33,7 @@ const AddBill =()=>{
 
     const onSubmitClick = async()=>{
         await axios.post('/api/bills/add', {amount})
-        checkedIds.forEach(p=>submitId(p.id))
+        checkedPpl.forEach(p=>submitId(p.id))
         navigate('/listbills')
     }
 
@@ -47,7 +47,7 @@ const AddBill =()=>{
             <div className="card shadow p-4">
                 <h2 className="card-title text-center mb-4">Add Bill</h2>
                 <div className="mb-3">
-                    <label for="totalAmount" className="form-label">Total Amount</label>
+                    <label className="form-label">Total Amount</label>
                     <input type="number" className="form-control" id="totalAmount" placeholder="Enter total bill amount" value={amount} onChange={e=>setAmount(e.target.value)}/>
                     </div>
                     <div className="mb-3">
@@ -61,7 +61,7 @@ const AddBill =()=>{
                             ))}                          
                         </div>
                     </div>
-                    {checkedIds && 
+                    {checkedPpl && 
                     <div className="mt-4">
                         <h3 className="text-center">Split Amounts</h3>
                         <ul className="list-group">

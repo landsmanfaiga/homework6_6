@@ -18,15 +18,23 @@ const Layout = (props) => {
                                     <Link to='/' className='nav-link text-light'>
                                         Home
                                     </Link>
+                                    </li>
+                                    <li className="nav-item">
                                     <Link to='/addparticipant' className='nav-link text-light'>
                                         Add Participant
                                     </Link>
+                                    </li>
+                                    <li className="nav-item">
                                     <Link to='/listparticipants' className='nav-link text-light'>
                                         List Participants
                                     </Link>
+                                    </li>
+                                    <li className="nav-item">
                                     <Link to='/addbill' className='nav-link text-light'>
                                         Add Bill
                                     </Link>
+                                    </li>
+                                    <li className="nav-item">
                                     <Link to='/listbills' className='nav-link text-light'>
                                         List Bills
                                     </Link>

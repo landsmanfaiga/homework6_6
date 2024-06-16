@@ -12,8 +12,11 @@ const ListBills = ()=>{
     },[])
 
     const getBills = async()=>{
-        const {data} = await axios.get('/api/bills/getall')
-        setBills(data);
+        const {data} = await axios.get('/api/bills/getall');
+        const response = await axios.get('/api/bills/getall');
+        console.log(data);
+        console.log(response);
+        setBills(data || []);
     }
     return(<>
     <div className="container">
