@@ -19,15 +19,11 @@ const AddBill =()=>{
         setParticipants(data);
     }
 
-    const onCheck =(p)=>{
-        const copy = checkedPpl;
-        if(!(checkedPpl.includes(p))){
-            copy.push(p);
-            setCheckedPpl(copy);
-        }
-        else{
-            copy.filter(i=> i !== p);
-            setCheckedPpl(copy);
+    const onCheck = p => {
+        if (checkedPpl.includes(p)) {
+            setCheckedPpl([...checkedPpl.filter(i => i !== p)])
+        } else {
+            setCheckedPpl([...checkedPpl, p])
         }
     }
 
@@ -58,7 +54,7 @@ const AddBill =()=>{
                             ))}                          
                         </div>
                     </div>
-                    {checkedPpl && 
+                    {checkedPpl.length && 
                     <div className="mt-4">
                         <h3 className="text-center">Split Amounts</h3>
                         <ul className="list-group">

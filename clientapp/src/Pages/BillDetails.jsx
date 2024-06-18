@@ -5,18 +5,27 @@ import dayjs from 'dayjs';
 
 const BillDetails = ()=>{
 
-    const{id} = useParams;
+    const{id} = useParams();
     const[bill, setBill] = useState({});
-    let amount = bill / bill.participants.length;
+    const[amount, setAmount] = useState(0);
+    const[participants, setParticipants] = useState([]);
 
     useEffect(()=>{
         getBill();
+        getPAmount();
     },[])
 
     const getBill = async()=>{
-        const{data} = await axios.get(`/api/get/${id}`)
-        setBill(data);
+        const{data} = await axios.get(`/api/bills/get/${id}`)
+        setBill({ amount: data[0].amount, date: data[0].date })
+        setParticipants(data.map(d => ({ name: d.name })).filter(b => b.name))
     }
+    const getPAmount = async()=>{
+        const{data} = await axios.get(`/api/bills/getPAmount/${id}`)
+        const total = bill.amount / data;
+        setAmount(total);
+    }
+
 
     return(<>
     <div className="container">
@@ -27,11 +36,11 @@ const BillDetails = ()=>{
                     </div>
                     <div className="card-body">
                         <p><strong>Date:</strong>{dayjs(bill.date).format('MM/DD/YYYY')}</p>
-                        <p><strong>Total Amount:</strong>&{bill.amount}</p>
+                        <p><strong>Total Amount:</strong>${bill.amount}</p>
                         <h3 className="mt-4">Participants</h3>
                         <ul className="list-group">
-                            {bill.participants.map(p=>(
-                                 <li className="list-group-item d-flex justify-content-between align-items-center">
+                            {participants.map(p=>(
+                                 <li className="list-group-item d-flex justify-content-between align-items-center" key={p.id}>
                                  <span>{p.name}</span>
                                  <span className="badge bg-success rounded-pill">${amount}</span>
                                  </li>

@@ -20,4 +20,9 @@ router.get('/get/:id', async (req, res) => {
     res.json(bill);
 })
 
+router.get('/getpamount/:id', async (req, res) => {
+    const amount = await db.getPAmount(req.params.id);
+    res.json(amount);
+})
+
 module.exports = router;
